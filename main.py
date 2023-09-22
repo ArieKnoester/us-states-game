@@ -24,16 +24,16 @@ while number_correct < 50:
     user_input = turtle.textinput(title=f"{number_correct}/50 States Correct", prompt="Enter a state name.")
     if user_input:
         user_input = user_input.title()
-    # User hits Cancel
+    # User clicks Cancel
     else:
         break
 
     if user_input in states["state"].values:
-        state = states[states.state == user_input]
-        state_name = state.state.item()
+        user_state = states[states.state == user_input]
+        state_name = user_state.state.item()
         if state_name not in correct_states:
             correct_states.append(state_name)
             number_correct = len(correct_states)
-            text_display.display_state_name(state_to_display=state)
+            text_display.display_state_name(state_to_display=user_state)
 
 turtle.mainloop()
