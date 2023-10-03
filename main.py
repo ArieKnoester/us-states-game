@@ -37,10 +37,7 @@ while number_correct < 50:
             text_display.display_state_name(state_to_display=user_state)
 
 # If the player quits before guessing all 50 states, write the states missed to a file.
-# TODO: There's probably a less convoluted way of doing this. This was just a first attempt to get it done.
-all_states_set = set(states["state"])
-correct_states_set = set(correct_states)
-states_missed = list(all_states_set - correct_states_set)
+states_missed = list(set(states.state).difference(correct_states))
 states_missed_df = pandas.DataFrame(data={"States Missed": states_missed})
 states_missed_df.to_csv("./states_missed.csv", sep=',', index=False)
 
