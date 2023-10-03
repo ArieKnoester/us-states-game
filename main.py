@@ -13,7 +13,7 @@ def initialize_screen():
     return new_screen
 
 
-states = pandas.read_csv("50_states.csv")
+all_states = pandas.read_csv("50_states.csv")
 screen = initialize_screen()
 correct_states = []
 number_correct = 0
@@ -28,17 +28,25 @@ while number_correct < 50:
     else:
         break
 
-    if user_input in states["state"].values:
-        user_state = states[states.state == user_input]
+    if user_input in all_states["state"].values:
+        user_state = all_states[all_states.state == user_input]
+        print(user_state)
         state_name = user_state.state.item()
         if state_name not in correct_states:
             correct_states.append(state_name)
             number_correct = len(correct_states)
             text_display.display_state_name(state_to_display=user_state)
 
-# If the player quits before guessing all 50 states, write the states missed to a file.
-states_missed = list(set(states.state).difference(correct_states))
-states_missed_df = pandas.DataFrame(data={"States Missed": states_missed})
-states_missed_df.to_csv("./states_missed.csv", sep=',', index=False)
+# If the player quits before guessing all 50 states (clicks the 'Cancel' button),
+# write the missing states to a file.
+if number_correct < 50:
+    missing_states = list(set(all_states.state).difference(correct_states))
+    states_missed_df = pandas.DataFrame(data={"States Missed": missing_states})
+    states_missed_df.to_csv("./states_missed.csv", sep=',', index=False)
+
+    # Writing the missing state names to a .csv file was a requirement for this exercise.
+    # While I understand this was intended to reinforce writing to a file with Pandas,
+    # I feel a better way to give the player feedback is to display them on the map in red.
+    text_display.display_missing_states(all_states, missing_states)
 
 turtle.mainloop()

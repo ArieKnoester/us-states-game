@@ -14,3 +14,9 @@ class TextDisplay(Turtle):
         ycor = float(state_to_display.y.item())
         self.goto((xcor, ycor))
         self.write(name, align="center")
+
+    def display_missing_states(self, all_states, missing_states):
+        self.color("red")
+        for missing_state in missing_states:
+            state_to_display = all_states[all_states.state == missing_state]
+            self.display_state_name(state_to_display)
