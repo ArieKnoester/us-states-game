@@ -44,8 +44,7 @@ if number_correct < 50:
     states_missed_df = pandas.DataFrame(data={"States Missed": missing_states})
     states_missed_df.to_csv("./states_missed.csv", sep=',', index=False)
 
-    # Writing the missing state names to a .csv file was a requirement for this exercise.
-    # While I understand this was intended to reinforce writing to a file with Pandas,
+    # Code block above satisfied a requirement for this exercise. However,
     # I feel a better way to give the player feedback is to display them on the map in red.
     text_display.display_missing_states(all_states, missing_states)
 
